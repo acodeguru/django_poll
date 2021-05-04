@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row center">
+        <div class="col-md-12 offset-md-1">
+            <a class="btn btn-primary float-right" href="{% url 'polls:add' %}" role="button">Add New Poll</a>
+            <br>
+
+            {% if messages %}
+             <br>
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <br>
+            {% if latest_question_list %}
+            <ul class="list-group list-group-flush">
+                {% for question in latest_question_list %}
+                <li class="list-group-item">{{ forloop.counter }}.
+                    <a href="{% url 'polls:detail' question.id %}">{{ question.question_text}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <h3>No polls are available.</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
